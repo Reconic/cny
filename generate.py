@@ -37,7 +37,7 @@ def main():
     vcal_header = "\r\n".join(
         [
             "BEGIN:VCALENDAR",
-            "PRODID:-//andrewlkho//cny.ics//EN",
+            "PRODID:-//reconic//cny.ics//EN",
             "VERSION:2.0",
             "CALSCALE:GREGORIAN",
         ]
