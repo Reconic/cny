@@ -1,5 +1,3 @@
-#!/usr/bin/env python3
-
 import datetime
 import lunardate
 
@@ -24,8 +22,8 @@ def gen_ical_vevent(year, start_date, end_date, summary, description):
             "BEGIN:VEVENT",
             f"DTSTAMP:{datetime.datetime.utcnow().strftime('%Y%m%dT%H%M%SZ')}",
             f"UID:{year}-{start_date.strftime('%Y%m%d')}@cny.ics",
-            f"DTSTART;VALUE=DATE:{start_date.strftime('%Y%m%d')}",
-            f"DTEND;VALUE=DATE:{end_date.strftime('%Y%m%d')}",
+            f"DTSTART;VALUE=DATE:{start_date.strftime('%Y%m%d')}T000000Z",  # Add time component
+            f"DTEND;VALUE=DATE:{end_date.strftime('%Y%m%d')}T000000Z",  # Add time component
             f"SUMMARY:{summary}",
             f"DESCRIPTION:{description}",
             "END:VEVENT",
@@ -37,8 +35,8 @@ def main():
     vcal_header = "\r\n".join(
         [
             "BEGIN:VCALENDAR",
-            "PRODID:-//andrewlkho//cny.ics//EN",
             "VERSION:2.0",
+            "PRODID:-//reconic//cny.ics//EN",
             "CALSCALE:GREGORIAN",
         ]
     )
@@ -78,7 +76,7 @@ def main():
     
     vcal_footer = "END:VCALENDAR"
     
-    # Print the iCalendar content for manual saving
+    # Output the complete iCalendar content to the console or file
     print("\r\n".join([vcal_header, vcal_body, vcal_footer]))
 
 if __name__ == "__main__":
