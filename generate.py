@@ -1,7 +1,8 @@
-#!/usr/bin/env python3 
+#!/usr/bin/env python3  
 
 import datetime
 import lunardate
+import uuid
 
 def get_animal(year):
     """Get the presiding animal zodiac for a given year."""
@@ -19,11 +20,12 @@ def cny_gregorian(year):
 
 def gen_ical_vevent(year, start_date, end_date, summary, description):
     """Generate an iCalendar VEVENT for a given date range as a text string."""
+    uid = f"{year}-{start_date.strftime('%Y%m%d')}-{str(uuid.uuid4())[:8]}@cny.ics"
     return "\r\n".join(
         [
             "BEGIN:VEVENT",
             f"DTSTAMP:{datetime.datetime.now(datetime.timezone.utc).strftime('%Y%m%dT%H%M%SZ')}",
-            f"UID:{year}-{start_date.strftime('%Y%m%d')}@cny.ics",
+            f"UID:{uid}",
             f"DTSTART;VALUE=DATE:{start_date.strftime('%Y%m%d')}",
             f"DTEND;VALUE=DATE:{end_date.strftime('%Y%m%d')}",
             f"SUMMARY:{summary}",
@@ -44,6 +46,7 @@ def main():
     )
     
     vcal_body = ""
+    
     for year in range(1999, 2100):  # Range from 1999 to 2099
         cny_date = cny_gregorian(year)
         
